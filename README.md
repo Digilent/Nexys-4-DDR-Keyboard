@@ -3,11 +3,16 @@ Nexys 4 DDR Keyboard Demo
 
 Description
 --------------
-This project is a Vivado demo using the Nexys 4 DDR's USB HID Host port and USB UART bridge, written in Verilog. When programmed onto the board, whenever the user presses a key on a keyboard connected to the USB HID port (J5, labeled "USB HOST"), a scan code is sent to the Nexys 4 DDR through a PS/2 interface. This scan code is read and transmitted to the computer via the USB-UART bridge. When the key is released, a scan code of 0xF0XX is transmitted, indicating that the key with PS/2 code "XX" has been released.
 
-To use this demo, the Nexys 4 DDR must be connected to a serial terminal on the computer it is connected to over the MicroUSB cable. For more information on how to set up and use a serial terminal, such as Tera Term or PuTTY, refer to [this tutorial](https://reference.digilentinc.com/learn/programmable-logic/tutorials/tera-term).
+This project is a Vivado demo using the Nexys 4 DDR's USB HID Host port and seven segment display, written in Verilog.
+When programmed onto the board, whenever the user presses a key on a keyboard connected to the USB HID port (J5, labeled "USB HOST"), a scan code is sent to the Nexys 4 DDR's  Artix-7 chip through a PS/2 interface.
 
-For example: If the user presses the space bar on a keyboard connected to the Nexys 4 DDR, the scan code "29" will be sent to the computer.  When the space bar is released, "F0 29" will be printed.
+This scan code is then displayed on the seven segment display.
+When the key is released, a scan code of 0xF0XX is transmitted, indicating that the key with PS/2 code "XX" has been released.
+Whenever a new code is read, the last code displayed is shifted left by 2 digits on the display.
+In order to avoid repeatedly shifting in the same code when a key is held down, if the new code is the same as the last one read, it is discarded instead of being displayed.
+
+For example: If the user presses the space bar on a keyboard connected to the Nexys 4 DDR, the scan code "29" will be displayed.  When the space bar is released, "F0 29" will be displayed, and the original "29" will be moved to the left half of the seven segment display.
 
 Requirements
 --------------
